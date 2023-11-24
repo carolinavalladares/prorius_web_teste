@@ -4,6 +4,6 @@ import { register } from "../controllers/userController";
 const route = Router();
 
 // routes
-route.get("/register", register);
+route.post("/register", register);
 
 export default route;

@@ -14,7 +14,7 @@ api.use(express.json());
 api.use("/users", userRoute);
 
 api.get("/", (req, res) => {
-  return res.send("Bem-vindo(a)!");
+  return res.send("Olá!");
 });
 
 api.listen(PORT, () => {
