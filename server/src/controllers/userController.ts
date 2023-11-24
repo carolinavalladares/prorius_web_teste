@@ -58,8 +58,21 @@ const register = async (req: Request, res: Response) => {
       user: omitPassword(user),
     });
   } catch (error) {
-    return res.status(400).json({ error });
+    return res.status(500).json({ error });
   }
 };
 
-export { register };
+const index = async (req: Request, res: Response) => {
+  try {
+    const users = await prisma.user.findMany();
+
+    // omitir a senha de todos os usuários da lista
+    const usersNoPassword = users.map((user) => omitPassword(user));
+
+    return res.status(200).json({ users: usersNoPassword });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+export { register, index };
