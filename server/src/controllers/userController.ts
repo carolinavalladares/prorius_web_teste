@@ -75,4 +75,22 @@ const index = async (req: Request, res: Response) => {
   }
 };
 
-export { register, index };
+const show = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const idNumber = Number(id);
+
+  try {
+    const user = await prisma.user.findUnique({ where: { id: idNumber } });
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado..." });
+    }
+
+    return res.status(200).json({ user: omitPassword(user) });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
+
+export { register, index, show };
