@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRoute from "./routes/user";
+import cors from "cors";
 
 dotenv.config();
 
@@ -9,6 +10,7 @@ const api = express();
 
 // middleware
 api.use(express.json());
+api.use(cors());
 
 // route middleware
 api.use("/users", userRoute);
