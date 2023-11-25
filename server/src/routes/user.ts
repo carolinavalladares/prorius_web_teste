@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { edit, index, register, show } from "../controllers/userController";
+import {
+  destroy,
+  edit,
+  index,
+  register,
+  restore,
+  show,
+} from "../controllers/userController";
 
 const route = Router();
 
@@ -15,10 +22,12 @@ route.get("/list", index);
 route.get("/:id", show);
 
 // editar usuário
-route.put("/:id", edit);
+route.put("/edit/:id", edit);
 
 // deletar usuário
+route.delete("/delete/:id", destroy);
 
 // restaurar usuário
+route.get("/restore/:id", restore);
 
 export default route;

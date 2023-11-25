@@ -106,8 +106,7 @@ const edit = async (req: Request, res: Response) => {
     });
   }
 
-  //   validar informações
-
+  // validar informações
   const roleUppercase = role.toUpperCase();
 
   const { error } = validateUserData({
@@ -125,6 +124,7 @@ const edit = async (req: Request, res: Response) => {
   }
 
   const idNumber = Number(id);
+
   // criptografar senha
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -140,4 +140,54 @@ const edit = async (req: Request, res: Response) => {
   }
 };
 
-export { register, index, show, edit };
+const destroy = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const numberId = Number(id);
+
+  try {
+    const user = await prisma.user.findFirst({ where: { id: numberId } });
+
+    if (!user) {
+      return res.status(400).json({ message: "Este usuário não existe..." });
+    }
+
+    const deletedUser = await prisma.user.update({
+      where: { id: numberId },
+      data: { deleted: true },
+    });
+
+    return res.status(200).json({
+      message: "Usuário deletado com sucesso.",
+      user: omitPassword(deletedUser),
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Falha ao deletar usuário...", error });
+  }
+};
+
+const restore = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const numberId = Number(id);
+
+  try {
+    const user = await prisma.user.update({
+      where: { id: numberId },
+      data: { deleted: false },
+    });
+
+    return res
+      .status(200)
+      .json({
+        message: "Usuário restaurado com sucesso.",
+        user: omitPassword(user),
+      });
+  } catch (error) {
+    return res.status(500).json({ message: "Falha ao restaurar usuário..." });
+  }
+};
+
+export { register, index, show, edit, destroy, restore };
