@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { index, register, show } from "../controllers/userController";
+import { edit, index, register, show } from "../controllers/userController";
 
 const route = Router();
 
@@ -13,5 +13,12 @@ route.get("/list", index);
 
 // mostrar um usuário
 route.get("/:id", show);
+
+// editar usuário
+route.put("/:id", edit);
+
+// deletar usuário
+
+// restaurar usuário
 
 export default route;

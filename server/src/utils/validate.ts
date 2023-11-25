@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { IRegisterData } from "../types";
+import { IUserData } from "../types";
 
-export const validateRegisterData = (data: IRegisterData) => {
+export const validateUserData = (data: IUserData) => {
   const pattern =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
 
