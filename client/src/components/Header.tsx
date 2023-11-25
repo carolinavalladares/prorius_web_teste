@@ -11,7 +11,7 @@ const Header = () => {
         </Link>
 
         <Link title="Cadastrar novo usuário" to={"/cadastrar"}>
-          <button className="bg-blue-950 text-white px-2 py-2 flex items-center justify-center gap-2 font-semibold text-xs rounded-sm">
+          <button className="bg-blue-950 text-white px-2 py-2 flex items-center justify-center gap-2 font-semibold text-xs rounded-sm focus:bg-blue-900 hover:bg-blue-900 transition-all">
             Cadastrar
             <UserRoundPlus size={18} color="#ffffff" />
           </button>

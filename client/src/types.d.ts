@@ -7,3 +7,11 @@ export interface IUser {
   deleted: boolean;
   role: string;
 }
+
+export interface IFormInitialValues {
+  name?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  role?: string;
+}

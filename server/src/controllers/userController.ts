@@ -37,9 +37,14 @@ const register = async (req: Request, res: Response) => {
   }
 
   // checar se usuário já existe
-  const userExists = await prisma.user.findFirst({ where: { email, name } });
+  const nameExists = await prisma.user.findFirst({
+    where: { name },
+  });
+  const emailExists = await prisma.user.findFirst({
+    where: { email },
+  });
 
-  if (userExists) {
+  if (nameExists || emailExists) {
     return res
       .status(400)
       .json({ message: "Este usuário já está cadastrado..." });
@@ -58,7 +63,7 @@ const register = async (req: Request, res: Response) => {
       user: omitPassword(user),
     });
   } catch (error) {
-    return res.status(500).json({ error });
+    return res.status(500).json({ error, message: "unable to register user" });
   }
 };
 
@@ -179,12 +184,10 @@ const restore = async (req: Request, res: Response) => {
       data: { deleted: false },
     });
 
-    return res
-      .status(200)
-      .json({
-        message: "Usuário restaurado com sucesso.",
-        user: omitPassword(user),
-      });
+    return res.status(200).json({
+      message: "Usuário restaurado com sucesso.",
+      user: omitPassword(user),
+    });
   } catch (error) {
     return res.status(500).json({ message: "Falha ao restaurar usuário..." });
   }
