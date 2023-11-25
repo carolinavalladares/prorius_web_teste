@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className="bg-white shadow-md py-5">
       <div className="max-w-5xl m-auto px-4 flex items-center justify-between lg:px-0">
-        <Link to="/">
+        <Link title="Home" to="/">
           <UsersRound />
         </Link>
 
