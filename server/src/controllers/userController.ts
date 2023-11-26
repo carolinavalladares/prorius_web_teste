@@ -69,7 +69,7 @@ const register = async (req: Request, res: Response) => {
 
 const index = async (req: Request, res: Response) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({ where: { deleted: false } });
 
     // omitir a senha de todos os usuários da lista
     const usersNoPassword = users.map((user) => omitPassword(user));

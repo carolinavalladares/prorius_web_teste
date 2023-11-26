@@ -35,12 +35,24 @@ export const registerUser = async ({
   }
 };
 
-export const fetchUser = async (id: number) => {
+export const fetchUser = async (id: string) => {
   try {
     const { data } = await axios.get(`http://localhost:8080/users/${id}`);
 
     return data;
   } catch (error) {
     return console.error(error);
+  }
+};
+
+export const deleteUser = async (id: string) => {
+  try {
+    const { data } = await axios.delete(
+      `http://localhost:8080/users/delete/${id}`
+    );
+
+    return data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
   }
 };

@@ -1,11 +1,13 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { IUser } from "../types";
-import { fetchUser } from "../../services/UserApi";
+import { deleteUser, fetchUser } from "../../services/UserApi";
 import { formatDate } from "../utils/formatDate";
+import { toast } from "react-toastify";
 
 const Details = () => {
   const { userId } = useParams();
+  const navigate = useNavigate();
   const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
@@ -13,9 +15,24 @@ const Details = () => {
   }, []);
 
   const getUser = async () => {
-    const data = await fetchUser(Number(userId));
+    if (!userId) {
+      return;
+    }
+
+    const data = await fetchUser(userId);
 
     setUser(data.user);
+  };
+
+  const handleDelete = async () => {
+    if (!userId) {
+      return;
+    }
+    const data = await deleteUser(userId);
+
+    toast.success(data.message);
+
+    navigate("/");
   };
 
   return (
@@ -47,6 +64,7 @@ const Details = () => {
               Editar
             </button>
             <button
+              onClick={handleDelete}
               title="Deletar usuário"
               className="text-sm px-2 py-1 bg-rose-500 font-semibold text-white"
             >
