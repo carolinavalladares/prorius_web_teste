@@ -70,7 +70,7 @@ export const deleteUser = async (id: string) => {
 
 export const restoreUser = async (id: number) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axios.patch(
       `http://localhost:8080/users/restore/${id}`
     );
 

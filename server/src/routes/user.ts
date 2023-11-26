@@ -32,6 +32,6 @@ route.patch("/edit/:id", edit);
 route.delete("/delete/:id", destroy);
 
 // restaurar usuário
-route.get("/restore/:id", restore);
+route.patch("/restore/:id", restore);
 
 export default route;
