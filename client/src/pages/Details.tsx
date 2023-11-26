@@ -48,7 +48,7 @@ const Details = () => {
 
       {user && (
         <div className="bg-white shadow-sm p-4 mt-2">
-          <h1 className="text-lg font-semibold mb-2">{user.name}</h1>
+          <h1 className="text-lg font-semibold mb-2 capitalize">{user.name}</h1>
 
           <p className="leading-none text-sm flex gap-1 flex-col mb-2">
             <span className="font-medium">E-mail:</span>

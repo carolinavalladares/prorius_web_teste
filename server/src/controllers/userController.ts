@@ -38,10 +38,10 @@ const register = async (req: Request, res: Response) => {
 
   // checar se usuário já existe
   const nameExists = await prisma.user.findFirst({
-    where: { name },
+    where: { name: name.toLowerCase() },
   });
   const emailExists = await prisma.user.findFirst({
-    where: { email },
+    where: { email: email.toLowerCase() },
   });
 
   if (nameExists || emailExists) {
@@ -53,9 +53,16 @@ const register = async (req: Request, res: Response) => {
   // criptografar senha
   const hashedPassword = await bcrypt.hash(password, 10);
 
+  const userData = {
+    name: name.toLowerCase(),
+    email: email.toLowerCase(),
+    password: hashedPassword,
+    role: roleUppercase,
+  };
+
   try {
     const user = await prisma.user.create({
-      data: { name, email, password: hashedPassword, role: roleUppercase },
+      data: { ...userData },
     });
 
     return res.status(201).json({
@@ -63,7 +70,9 @@ const register = async (req: Request, res: Response) => {
       user: omitPassword(user),
     });
   } catch (error) {
-    return res.status(500).json({ error, message: "unable to register user" });
+    return res
+      .status(500)
+      .json({ error, message: "Não foi possível registrar o usuário..." });
   }
 };
 
@@ -123,13 +132,14 @@ const edit = async (req: Request, res: Response) => {
     });
   }
 
-  // validar informações
-  const roleUppercase = role.toUpperCase();
+  const userData = {
+    name: name.toLowerCase(),
+    email: email.toLowerCase(),
+    role: role.toUpperCase(),
+  };
 
   const { error } = validateEditData({
-    name,
-    email,
-    role: roleUppercase,
+    ...userData,
   });
 
   if (error) {
@@ -143,15 +153,13 @@ const edit = async (req: Request, res: Response) => {
   try {
     const updatedUser = await prisma.user.update({
       where: { id: idNumber },
-      data: { name, email, role },
+      data: { ...userData },
     });
 
-    return res
-      .status(200)
-      .json({
-        user: omitPassword(updatedUser),
-        message: "Usuário atualizado com sucesso.",
-      });
+    return res.status(200).json({
+      user: omitPassword(updatedUser),
+      message: "Usuário atualizado com sucesso.",
+    });
   } catch (error) {
     return res.status(500).json({ error });
   }

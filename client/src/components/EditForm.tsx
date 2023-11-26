@@ -26,7 +26,13 @@ const EditForm = ({ initialValues }: IProps) => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<IFields> = async (data) => {
-    const resp = await editUser({ ...data, id: initialValues.id });
+    const userData = {
+      name: data.name.trim(),
+      email: data.email.trim(),
+      role: data.role.trim(),
+      id: initialValues.id,
+    };
+    const resp = await editUser(userData);
 
     toast.success(resp.message);
 

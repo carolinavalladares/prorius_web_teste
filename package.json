@@ -6,7 +6,10 @@
   "scripts": {
     "server": "cd server && npm run start",
     "client": "cd client && npm run dev",
-    "start" : "concurrently \"npm run server\" \"npm run client\" "
+    "server_setup":"cd server && npm install && npx prisma migrate dev",
+    "client_setup": "cd client && npm install",
+    "start" : "concurrently \"npm run server\" \"npm run client\"",
+    "setup": "concurrently \"npm run server_setup\" \"npm run client_setup\"  "
   },
   "keywords": [],
   "author": "",

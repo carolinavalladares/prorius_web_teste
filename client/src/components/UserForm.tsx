@@ -22,7 +22,15 @@ const UserForm = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<IFields> = async (data) => {
-    const resp = await registerUser(data);
+    const userData = {
+      name: data.name.trim(),
+      email: data.email.trim(),
+      password: data.password.trim(),
+      confirmPassword: data.confirmPassword.trim(),
+      role: data.role.trim(),
+    };
+
+    const resp = await registerUser(userData);
 
     toast.success(resp && resp.data.message);
 

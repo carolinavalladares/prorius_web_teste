@@ -23,7 +23,7 @@ const UserCard = ({ user, getDeletedUsers }: IProps) => {
   return (
     <div className="bg-white shadow-sm p-4 rounded-sm relative">
       <div>
-        <p className="font-semibold leading-none mb-1">{name}</p>
+        <p className="font-semibold leading-none mb-1 capitalize">{name}</p>
         <p className="text-sm leading-none text-gray-500">{email}</p>
 
         {user.deleted ? (
