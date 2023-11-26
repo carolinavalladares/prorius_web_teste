@@ -3,6 +3,7 @@ import { fetchDeletedUsers, fetchUsers } from "../../services/UserApi";
 import { IUser } from "../types";
 import UserCard from "../components/UserCard";
 import { ChevronLeft } from "lucide-react";
+import Loading from "../components/Loading";
 
 const Home = () => {
   const [users, setUsers] = useState<IUser[] | null>(null);
@@ -46,6 +47,7 @@ const Home = () => {
     <div>
       <h1 className="text-xl font-semibold mb-6">Gerenciar usuários</h1>
       <div className="text-sm flex items-end justify-end mb-2">
+        {/* return button */}
         <button
           onClick={handleChangeTab}
           className="hover:underline text-blue-950"
@@ -60,23 +62,30 @@ const Home = () => {
           )}
         </button>
       </div>
-      <div className="flex flex-col gap-3">
-        {users && users.length > 0 ? (
-          users.map((user) => {
-            return (
-              <UserCard
-                getDeletedUsers={getDeletedUsers}
-                key={user.id}
-                user={user}
-              />
-            );
-          })
-        ) : (
-          <div className="w-full h-96 text-sm flex items-center justify-center text-gray-500">
-            Nenhum usuário até o momento...
-          </div>
-        )}
-      </div>
+
+      {users ? (
+        <div className="flex flex-col gap-3">
+          {users.length > 0 ? (
+            users.map((user) => {
+              return (
+                <UserCard
+                  getDeletedUsers={getDeletedUsers}
+                  key={user.id}
+                  user={user}
+                />
+              );
+            })
+          ) : (
+            <div className="w-full h-96 text-sm flex items-center justify-center text-gray-500">
+              Nenhum usuário até o momento...
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex h-96 items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };

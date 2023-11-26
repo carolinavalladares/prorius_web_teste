@@ -4,6 +4,7 @@ import { fetchUser } from "../../services/UserApi";
 import { Link, useParams } from "react-router-dom";
 import EditForm from "../components/EditForm";
 import { ChevronLeft } from "lucide-react";
+import Loading from "../components/Loading";
 
 const Edit = () => {
   const { userId } = useParams();
@@ -28,6 +29,7 @@ const Edit = () => {
         <>
           <h1 className="text-xl font-semibold mb-2">Editar Usuário</h1>
 
+          {/* return button */}
           <Link to={`/user/${user.id}`}>
             <button className="flex items-center justify-center text-sm text-blue-950 hover:underline focus:underline">
               {" "}
@@ -47,7 +49,9 @@ const Edit = () => {
           </div>
         </>
       ) : (
-        <div>Loading...</div>
+        <div className="flex h-96 items-center justify-center">
+          <Loading />
+        </div>
       )}
     </div>
   );

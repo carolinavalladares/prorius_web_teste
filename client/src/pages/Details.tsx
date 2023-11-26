@@ -38,12 +38,14 @@ const Details = () => {
 
   return (
     <div>
+      {/* return button */}
       <Link to={"/"}>
         <button className="flex items-center justify-center text-sm text-blue-950 hover:underline focus:underline">
           {" "}
           <ChevronLeft size={16} /> Voltar
         </button>
       </Link>
+
       {user && (
         <div className="bg-white shadow-sm p-4 mt-2">
           <h1 className="text-lg font-semibold mb-2">{user.name}</h1>
