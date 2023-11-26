@@ -1,13 +1,8 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { IFormInitialValues } from "../types";
 import { registerUser } from "../../services/UserApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOffIcon } from "lucide-react";
-
-interface IProps {
-  initialValues?: IFormInitialValues;
-}
 
 interface IFields {
   name: string;
@@ -17,14 +12,12 @@ interface IFields {
   role: string;
 }
 
-const UserForm = ({ initialValues }: IProps) => {
+const UserForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFields>({
-    defaultValues: initialValues && initialValues,
-  });
+  } = useForm<IFields>();
 
   const navigate = useNavigate();
 

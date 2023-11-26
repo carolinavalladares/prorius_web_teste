@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IUserData } from "../types";
-import { validateUserData } from "../utils/validate";
+import { validateEditData, validateUserData } from "../utils/validate";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { omitPassword } from "../utils/omitPassword";
@@ -113,10 +113,10 @@ const show = async (req: Request, res: Response) => {
 const edit = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const { name, email, password, confirmPassword, role }: IUserData = req.body;
+  const { name, email, role }: IUserData = req.body;
 
   //   verificar se todas as informações necessárias foram enviadas
-  if (!name || !email || !password || !confirmPassword || !role) {
+  if (!name || !email || !role) {
     return res.status(400).json({
       message:
         "Não foi possível editar o usuário... Por favor forneça todas as informações.",
@@ -126,11 +126,9 @@ const edit = async (req: Request, res: Response) => {
   // validar informações
   const roleUppercase = role.toUpperCase();
 
-  const { error } = validateUserData({
+  const { error } = validateEditData({
     name,
     email,
-    password,
-    confirmPassword,
     role: roleUppercase,
   });
 
@@ -142,16 +140,18 @@ const edit = async (req: Request, res: Response) => {
 
   const idNumber = Number(id);
 
-  // criptografar senha
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   try {
     const updatedUser = await prisma.user.update({
       where: { id: idNumber },
-      data: { name, email, role, password: hashedPassword },
+      data: { name, email, role },
     });
 
-    return res.status(200).json({ user: omitPassword(updatedUser) });
+    return res
+      .status(200)
+      .json({
+        user: omitPassword(updatedUser),
+        message: "Usuário atualizado com sucesso.",
+      });
   } catch (error) {
     return res.status(500).json({ error });
   }

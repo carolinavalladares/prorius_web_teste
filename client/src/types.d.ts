@@ -15,3 +15,9 @@ export interface IFormInitialValues {
   confirmPassword?: string;
   role?: string;
 }
+export interface IEditInitialValues {
+  name?: string;
+  email?: string;
+  role?: string;
+  id: number;
+}

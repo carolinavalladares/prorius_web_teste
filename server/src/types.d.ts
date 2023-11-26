@@ -15,3 +15,9 @@ export interface IUser {
   deleted: boolean;
   role: string;
 }
+
+export interface IUserEdit {
+  name: string;
+  email: string;
+  role: string;
+}

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { IUser } from "../types";
 import { deleteUser, fetchUser } from "../../services/UserApi";
@@ -57,12 +57,15 @@ const Details = () => {
           </p>
 
           <div className="flex items-center justify-start gap-4 mt-4">
-            <button
-              title="Editar Usuário"
-              className="text-sm px-2 py-1 bg-blue-950 font-semibold text-white"
-            >
-              Editar
-            </button>
+            <Link to={`/user/${user.id}/edit`}>
+              <button
+                title="Editar Usuário"
+                className="text-sm px-2 py-1 bg-blue-950 font-semibold text-white"
+              >
+                Editar
+              </button>
+            </Link>
+
             <button
               onClick={handleDelete}
               title="Deletar usuário"

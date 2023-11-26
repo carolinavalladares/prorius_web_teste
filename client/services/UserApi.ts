@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IFormInitialValues } from "../src/types";
+import { IEditInitialValues, IFormInitialValues } from "../src/types";
 import { toast } from "react-toastify";
 
 export const fetchUsers = async () => {
@@ -72,6 +72,24 @@ export const restoreUser = async (id: number) => {
   try {
     const { data } = await axios.get(
       `http://localhost:8080/users/restore/${id}`
+    );
+
+    return data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
+  }
+};
+
+export const editUser = async ({
+  id,
+  name,
+  email,
+  role,
+}: IEditInitialValues) => {
+  try {
+    const { data } = await axios.patch(
+      `http://localhost:8080/users/edit/${id}`,
+      { name, email, role }
     );
 
     return data;

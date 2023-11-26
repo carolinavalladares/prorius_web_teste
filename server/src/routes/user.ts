@@ -26,7 +26,7 @@ route.get("/list-deleted", indexDeleted);
 route.get("/:id", show);
 
 // editar usuário
-route.put("/edit/:id", edit);
+route.patch("/edit/:id", edit);
 
 // deletar usuário
 route.delete("/delete/:id", destroy);
