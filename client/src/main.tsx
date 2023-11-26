@@ -13,7 +13,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Layout>
         <AppRoutes />
-        <ToastContainer />
+        <ToastContainer
+          position="top-center"
+          bodyClassName={"text-black text-sm"}
+          limit={1}
+        />
       </Layout>
     </BrowserRouter>
   </React.StrictMode>

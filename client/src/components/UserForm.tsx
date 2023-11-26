@@ -3,6 +3,7 @@ import { IFormInitialValues } from "../types";
 import { registerUser } from "../../services/UserApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOffIcon } from "lucide-react";
 
 interface IProps {
   initialValues?: IFormInitialValues;
@@ -35,6 +36,30 @@ const UserForm = ({ initialValues }: IProps) => {
     navigate("/");
   };
 
+  const togglePasswordVisibility = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    const target = e.currentTarget as HTMLButtonElement;
+
+    const input = target.parentElement?.children[0] as HTMLInputElement;
+
+    if (!input) {
+      return;
+    }
+
+    if (input.type == "password") {
+      input.type = "text";
+
+      target.children[0].classList.add("absolute", "invisible");
+      target.children[1].classList.remove("absolute", "invisible");
+    } else {
+      input.type = "password";
+
+      target.children[0].classList.remove("absolute", "invisible");
+      target.children[1].classList.add("absolute", "invisible");
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="p-4 bg-white shadow-md">
       <div className="flex flex-col mb-4 relative">
@@ -44,11 +69,12 @@ const UserForm = ({ initialValues }: IProps) => {
         </label>
         <input
           {...register("name", { required: true })}
-          className={`border border-gray-200 h-9 px-4 outline-none focus:border-blue-950  ${
+          className={`border border-gray-200 h-9 px-4 outline-none focus:border-blue-950 text-sm  ${
             errors.name && "border-rose-500"
           }`}
           type="text"
         />
+
         {errors.name?.type === "required" && (
           <p className="text-xs text-red-500 font-medium absolute -bottom-4">
             Este campo é obrigatório
@@ -62,12 +88,13 @@ const UserForm = ({ initialValues }: IProps) => {
           Email:
         </label>
         <input
-          className={`border border-gray-200 h-9 px-4 outline-none focus:border-blue-950 ${
+          className={`border border-gray-200 h-9 px-4 outline-none focus:border-blue-950 text-sm ${
             errors.email && "border-rose-500"
           }`}
           type="email"
           {...register("email", { required: true })}
         />
+
         {errors.email?.type === "required" && (
           <p className="text-xs text-red-500 font-medium absolute -bottom-4">
             Este campo é obrigatório
@@ -80,18 +107,29 @@ const UserForm = ({ initialValues }: IProps) => {
         <label className="text-sm font-semibold mb-1" htmlFor="password">
           Senha:
         </label>
-        <input
-          className={`border border-gray-200 h-9 px-4 outline-none focus:border-blue-950 ${
-            errors.password && "border-rose-500"
-          }`}
-          type="password"
-          {...register("password", {
-            required: true,
-            minLength: 6,
-            pattern:
-              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
-          })}
-        />
+        <div className="relative">
+          <input
+            className={`border border-gray-200 h-9 px-4 outline-none focus:border-blue-950 text-sm w-full ${
+              errors.password && "border-rose-500"
+            }`}
+            type="password"
+            {...register("password", {
+              required: true,
+              minLength: 6,
+              pattern:
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+            })}
+          />
+          <button
+            type="button"
+            onClick={(e) => togglePasswordVisibility(e)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+          >
+            <Eye className="" size={16} />
+            <EyeOffIcon className="invisible absolute" size={16} />
+          </button>
+        </div>
+
         {errors.password?.type === "required" ? (
           <p className="text-xs text-red-500 font-medium absolute -bottom-4">
             Este campo é obrigatório
@@ -102,7 +140,7 @@ const UserForm = ({ initialValues }: IProps) => {
           </p>
         ) : errors.password?.type === "pattern" ? (
           <p className="text-xs text-red-500 font-medium absolute -bottom-4">
-            A senha deve conter no mínimo um número, uma letra e um caracter
+            A senha deve conter pelo menos um número, uma letra e um caracter
             especial
           </p>
         ) : null}
@@ -113,16 +151,27 @@ const UserForm = ({ initialValues }: IProps) => {
         <label className="text-sm font-semibold mb-1" htmlFor="confirmPassword">
           Confirmar senha:
         </label>
-        <input
-          className={`border border-gray-200 h-9 px-4  outline-none focus:border-blue-950 ${
-            errors.confirmPassword && "border-rose-500"
-          }`}
-          type="password"
-          {...register("confirmPassword", {
-            required: true,
-            validate: (value, formValues) => value === formValues.password,
-          })}
-        />
+        <div className="relative">
+          <input
+            className={`border border-gray-200 h-9 px-4  outline-none focus:border-blue-950 text-sm w-full ${
+              errors.confirmPassword && "border-rose-500"
+            }`}
+            type="password"
+            {...register("confirmPassword", {
+              required: true,
+              validate: (value, formValues) => value === formValues.password,
+            })}
+          />
+          <button
+            type="button"
+            onClick={(e) => togglePasswordVisibility(e)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+          >
+            <Eye className="" size={16} />
+            <EyeOffIcon className="invisible absolute" size={16} />
+          </button>
+        </div>
+
         {errors.confirmPassword?.type === "required" ? (
           <p className="text-xs text-red-500 font-medium absolute -bottom-4">
             Este campo é obrigatório
