@@ -3,6 +3,7 @@ import {
   destroy,
   edit,
   index,
+  indexDeleted,
   register,
   restore,
   show,
@@ -17,6 +18,9 @@ route.post("/register", register);
 
 // listar todos os usuários
 route.get("/list", index);
+
+// listar todos os usuários deletados
+route.get("/list-deleted", indexDeleted);
 
 // mostrar um usuário
 route.get("/:id", show);

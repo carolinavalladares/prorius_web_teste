@@ -79,6 +79,18 @@ const index = async (req: Request, res: Response) => {
     return res.status(500).json({ error });
   }
 };
+const indexDeleted = async (req: Request, res: Response) => {
+  try {
+    const users = await prisma.user.findMany({ where: { deleted: true } });
+
+    // omitir a senha de todos os usuários da lista
+    const usersNoPassword = users.map((user) => omitPassword(user));
+
+    return res.status(200).json({ users: usersNoPassword });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+};
 
 const show = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -193,4 +205,4 @@ const restore = async (req: Request, res: Response) => {
   }
 };
 
-export { register, index, show, edit, destroy, restore };
+export { register, index, indexDeleted, show, edit, destroy, restore };

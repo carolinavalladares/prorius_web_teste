@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
-import { fetchUsers } from "../../services/UserApi";
+import { fetchDeletedUsers, fetchUsers } from "../../services/UserApi";
 import { IUser } from "../types";
 import UserCard from "../components/UserCard";
 
 const Home = () => {
-  const [users, setUsers] = useState<IUser[] | null>();
+  const [users, setUsers] = useState<IUser[] | null>(null);
+  const [currentTab, setCurrentTab] = useState("all");
 
   useEffect(() => {
     getUsers();
   }, []);
+
+  useEffect(() => {
+    if (currentTab == "all") {
+      getUsers();
+    } else {
+      getDeletedUsers();
+    }
+  }, [currentTab]);
 
   const getUsers = async () => {
     const data = await fetchUsers();
@@ -16,14 +25,49 @@ const Home = () => {
     setUsers(data.users);
   };
 
+  const getDeletedUsers = async () => {
+    const data = await fetchDeletedUsers();
+
+    setUsers(data.users);
+  };
+
+  const handleChangeTab = () => {
+    if (currentTab == "all") {
+      setCurrentTab("deleted");
+    } else if (currentTab == "deleted") {
+      setCurrentTab("all");
+    } else {
+      setCurrentTab("all");
+    }
+  };
+
   return (
     <div>
       <h1 className="text-xl font-semibold mb-6">Gerenciar usuários</h1>
-
+      <div className="text-sm flex items-end justify-end mb-2">
+        <button
+          onClick={handleChangeTab}
+          className="hover:underline text-blue-950"
+        >
+          {currentTab == "all" ? "Ver usuários deletados" : "voltar"}
+        </button>
+      </div>
       <div className="flex flex-col gap-3">
-        {users?.map((user) => {
-          return <UserCard key={user.id} user={user} />;
-        })}
+        {users && users.length > 0 ? (
+          users.map((user) => {
+            return (
+              <UserCard
+                getDeletedUsers={getDeletedUsers}
+                key={user.id}
+                user={user}
+              />
+            );
+          })
+        ) : (
+          <div className="w-full h-96 flex items-center justify-center text-gray-500">
+            Nenhum usuário até o momento...
+          </div>
+        )}
       </div>
     </div>
   );

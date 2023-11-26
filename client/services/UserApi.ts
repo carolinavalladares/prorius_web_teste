@@ -11,6 +11,17 @@ export const fetchUsers = async () => {
     return console.error(error);
   }
 };
+export const fetchDeletedUsers = async () => {
+  try {
+    const { data } = await axios.get(
+      "http://localhost:8080/users/list-deleted"
+    );
+
+    return data;
+  } catch (error) {
+    return console.error(error);
+  }
+};
 
 export const registerUser = async ({
   name,
@@ -49,6 +60,18 @@ export const deleteUser = async (id: string) => {
   try {
     const { data } = await axios.delete(
       `http://localhost:8080/users/delete/${id}`
+    );
+
+    return data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
+  }
+};
+
+export const restoreUser = async (id: number) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:8080/users/restore/${id}`
     );
 
     return data;

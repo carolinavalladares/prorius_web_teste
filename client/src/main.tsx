@@ -17,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           position="top-center"
           bodyClassName={"text-black text-sm"}
           limit={1}
+          autoClose={2000}
         />
       </Layout>
     </BrowserRouter>
