@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchDeletedUsers, fetchUsers } from "../../services/UserApi";
 import { IUser } from "../types";
 import UserCard from "../components/UserCard";
+import { ChevronLeft } from "lucide-react";
 
 const Home = () => {
   const [users, setUsers] = useState<IUser[] | null>(null);
@@ -49,7 +50,14 @@ const Home = () => {
           onClick={handleChangeTab}
           className="hover:underline text-blue-950"
         >
-          {currentTab == "all" ? "Ver usuários deletados" : "voltar"}
+          {currentTab == "all" ? (
+            "Ver usuários deletados"
+          ) : (
+            <span className="flex items-center justify-center">
+              {" "}
+              <ChevronLeft size={16} /> Voltar
+            </span>
+          )}
         </button>
       </div>
       <div className="flex flex-col gap-3">
@@ -64,7 +72,7 @@ const Home = () => {
             );
           })
         ) : (
-          <div className="w-full h-96 flex items-center justify-center text-gray-500">
+          <div className="w-full h-96 text-sm flex items-center justify-center text-gray-500">
             Nenhum usuário até o momento...
           </div>
         )}
