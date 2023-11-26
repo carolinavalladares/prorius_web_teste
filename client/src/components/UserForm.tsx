@@ -121,6 +121,7 @@ const UserForm = ({ initialValues }: IProps) => {
             })}
           />
           <button
+            title="Mostrar/Esconder senha"
             type="button"
             onClick={(e) => togglePasswordVisibility(e)}
             className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
@@ -163,6 +164,7 @@ const UserForm = ({ initialValues }: IProps) => {
             })}
           />
           <button
+            title="Mostrar/Esconder senha"
             type="button"
             onClick={(e) => togglePasswordVisibility(e)}
             className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
@@ -221,7 +223,10 @@ const UserForm = ({ initialValues }: IProps) => {
         )}
       </fieldset>
 
-      <button className="p-2 bg-blue-950 text-white text-sm font-semibold ml-auto mr-0 flex outline-none  focus:bg-blue-900 hover:bg-blue-900 transition-all ">
+      <button
+        title="Cadastrar usuário"
+        className="p-2 bg-blue-950 text-white text-sm font-semibold ml-auto mr-0 flex outline-none  focus:bg-blue-900 hover:bg-blue-900 transition-all "
+      >
         Cadastrar
       </button>
     </form>

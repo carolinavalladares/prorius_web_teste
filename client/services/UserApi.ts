@@ -34,3 +34,13 @@ export const registerUser = async ({
     toast.error(error.response.data.message);
   }
 };
+
+export const fetchUser = async (id: number) => {
+  try {
+    const { data } = await axios.get(`http://localhost:8080/users/${id}`);
+
+    return data;
+  } catch (error) {
+    return console.error(error);
+  }
+};
