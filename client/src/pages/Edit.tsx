@@ -27,7 +27,7 @@ const Edit = () => {
     <div>
       {user ? (
         <>
-          <h1 className="text-xl font-semibold mb-2">Editar Usuário</h1>
+          <h1 className="text-lg font-semibold mb-2">Editar Usuário</h1>
 
           {/* return button */}
           <Link to={`/user/${user.id}`}>

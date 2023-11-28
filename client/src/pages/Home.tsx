@@ -45,7 +45,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold mb-6">Gerenciar usuários</h1>
+      <h1 className="text-lg font-semibold mb-6">Gerenciar usuários</h1>
       <div className="text-sm flex items-end justify-end mb-2">
         {/* return button */}
         <button

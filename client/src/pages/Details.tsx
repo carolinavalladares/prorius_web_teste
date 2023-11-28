@@ -48,19 +48,21 @@ const Details = () => {
 
       {user && (
         <div className="bg-white shadow-sm p-4 mt-2">
-          <h1 className="text-lg font-semibold mb-2 capitalize">{user.name}</h1>
+          <h1 className="text-base sm:text-lg font-semibold mb-2 capitalize">
+            {user.name}
+          </h1>
 
-          <p className="leading-none text-sm flex gap-1 flex-col mb-2">
+          <p className="leading-none text-xs sm:text-sm flex gap-1 flex-col mb-2">
             <span className="font-medium">E-mail:</span>
             {user.email}
           </p>
 
-          <p className="leading-none text-sm flex gap-1 flex-col mb-2">
+          <p className="leading-none text-xs sm:text-sm flex gap-1 flex-col mb-2">
             <span className="font-medium">Criado em:</span>
             {formatDate(user.created_at)}
           </p>
 
-          <p className="leading-none text-sm flex gap-1 flex-col mb-2">
+          <p className="leading-none text-xs sm:text-sm flex gap-1 flex-col mb-2">
             <span className="font-medium">Função:</span>
             {user.role == "ADMIN" ? "Administrador" : "Usuário"}
           </p>

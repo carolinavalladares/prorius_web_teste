@@ -5,7 +5,7 @@ import { ChevronLeft } from "lucide-react";
 const Register = () => {
   return (
     <div>
-      <h1 className="text-xl font-semibold mb-2">Cadastrar novo usuário</h1>
+      <h1 className="text-lg font-semibold mb-2">Cadastrar novo usuário</h1>
 
       {/* return button */}
       <Link to={`/`}>
